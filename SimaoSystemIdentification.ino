@@ -1,7 +1,7 @@
 #include <TimerOne.h>
 
-const int pinLed = 3;
-const int pinSensor = 0;
+const int pinLed = 5;
+const int pinSensor = 1;
 double integrator = 0.0;
 const double timestep = 150000;
 
@@ -73,14 +73,14 @@ int controller(double Lux, double LuxRef){
   
   double ret = (FFwd+FBck+integrator);
   
-  if( (ret < 1023.0 || (LuxRef-Lux)<0) && (ret>0 || (LuxRef-Lux)>0)) {
+  if( (ret < 255.0 || (LuxRef-Lux)<0) && (ret>0 || (LuxRef-Lux)>0)) {
     integrator = integrator + 10.0*timestep/1000000.0*(LuxRef-Lux);
   }
   
   ret = (FFwd+FBck+integrator);
 
-  if(ret >= 1023.0){
-    ret  = 1023.0;
+  if(ret >= 255.0){
+    ret  = 255.0;
   }
   
   if(ret <= 0){
